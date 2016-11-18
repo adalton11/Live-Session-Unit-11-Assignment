@@ -1,0 +1,53 @@
+---
+title: "Live Session Unit 11 Assignment"
+author: "Anthony Dalton"
+date: "November 18, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fpp)
+```
+
+# a) Read in data and plot visitors data
+```{r}
+data(visitors)
+plot(visitors)
+# You can definitely see seasonality and that the amount of visitors trends up over time.
+```
+
+# b) Classical decomposition to calculate the trend cycle
+```{r}
+fitd <- decompose(visitors) 
+plot(fitd)
+```
+
+# c) The results support the interpretation from part a, the trend definitely is heading up while there is seasonality
+
+# d) Computing and plotting of the seasonally adjusted data
+```{r}
+eeadj <- seasadj(fitd) 
+plot(eeadj)
+```
+
+# e) Change one observation to be an outlier
+```{r}
+# Adding 500 to the third value and replotting the chart
+eeadj[3] = 675.4
+plot(eeadj)
+# You can see a very large spike in the dataset
+```
+
+#  f) Placement of the outlier doesn't matter, adding 500 to the middle value
+```{r}
+eeadj[120] = 675.4
+# Spikes the same
+plot(eeadj)
+```
+
+# g) Use STL to decompose the series.
+```{r}
+fit <- stl(visitors, s.window=5) 
+plot(fit) 
+```
